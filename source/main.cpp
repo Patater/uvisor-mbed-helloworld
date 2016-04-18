@@ -19,6 +19,7 @@
 #include "uvisor-lib/uvisor-lib.h"
 #include "mbed.h"
 #include "rtos.h"
+#include "PagedThread.h"
 #include "main-hw.h"
 
 /* Create ACLs for main box. */
@@ -52,3 +53,29 @@ int main(void)
 
     return 0;
 }
+
+#if 0
+int main(void)
+{
+    extern serial_t stdio_uart;
+    serial_init(&stdio_uart, STDIO_UART_TX, STDIO_UART_RX);
+    serial_baud(&stdio_uart, 115200);
+    printf("\r\n***** stupid uvisor-rtos example *****\r\n");
+
+    PagedThread led_blinker_thread(led_blinker);
+
+    led_blinker_thread.start(40*1024,
+                             8*1024,
+                             DEFAULT_STACK_SIZE,
+                             NULL,
+                             osPriorityAboveNormal);
+    led1_init();
+    led2_init();
+    led3_init();
+
+
+    while (1);
+
+    return 0;
+}
+#endif
