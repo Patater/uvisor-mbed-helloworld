@@ -28,38 +28,13 @@ MAIN_ACL(g_main_acl);
 /* Enable uVisor. */
 UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_main_acl);
 
-DigitalOut led1(LED1);
-DigitalOut led2(LED2);
-DigitalOut led3(LED3);
-
-extern int led1_val;
-extern int led2_val;
-extern int led3_val;
-
-void led_blinker(const void *)
-{
-    led1 = LED_OFF;
-    led2 = LED_OFF;
-    led3 = LED_OFF;
-
-    while (1) {
-        led1 = led1_val;
-        led2 = led2_val;
-        led3 = led3_val;
-        Thread::wait(100);
-    }
-}
-
 int main(void)
 {
     printf("\r\n***** stupid uvisor-rtos example *****\r\n");
 
-    Thread led_blinker_thread(led_blinker, NULL, osPriorityAboveNormal);
-
     led1_init();
     led2_init();
     led3_init();
-
 
     while (1);
 
